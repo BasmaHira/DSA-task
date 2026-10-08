@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class CircularQueue {
 
     int[] queue = new int[5];
@@ -6,39 +8,46 @@ public class CircularQueue {
     int rear = -1;
 
     // Enqueue
-    void enqueue(int data) {
+    void enqueue(int job) {
 
         if ((rear + 1) % queue.length == front) {
+
             System.out.println("Queue is full.");
-            return;
+
+        } else {
+
+            if (front == -1) {
+                front = 0;
+            }
+
+            rear = (rear + 1) % queue.length;
+
+            queue[rear] = job;
+
+            System.out.println("Print job added.");
         }
-
-        if (front == -1) {
-            front = 0;
-        }
-
-        rear = (rear + 1) % queue.length;
-
-        queue[rear] = data;
-
-        System.out.println(data + " added to queue.");
     }
 
     // Dequeue
     void dequeue() {
 
         if (front == -1) {
+
             System.out.println("Queue is empty.");
-            return;
-        }
 
-        System.out.println(queue[front] + " removed from queue.");
-
-        if (front == rear) {
-            front = -1;
-            rear = -1;
         } else {
-            front = (front + 1) % queue.length;
+
+            System.out.println("Printed job: " + queue[front]);
+
+            if (front == rear) {
+
+                front = -1;
+                rear = -1;
+
+            } else {
+
+                front = (front + 1) % queue.length;
+            }
         }
     }
 
@@ -46,47 +55,73 @@ public class CircularQueue {
     void display() {
 
         if (front == -1) {
+
             System.out.println("Queue is empty.");
-            return;
-        }
 
-        System.out.println("Circular Queue:");
+        } else {
 
-        int i = front;
+            System.out.println("Print Jobs:");
 
-        while (true) {
+            int i = front;
 
-            System.out.print(queue[i] + " ");
+            while (true) {
 
-            if (i == rear) {
-                break;
+                System.out.println(queue[i]);
+
+                if (i == rear) {
+                    break;
+                }
+
+                i = (i + 1) % queue.length;
             }
-
-            i = (i + 1) % queue.length;
         }
-
-        System.out.println();
     }
 
     public static void main(String[] args) {
 
+        Scanner input = new Scanner(System.in);
+
         CircularQueue queue = new CircularQueue();
 
-        queue.enqueue(10);
-        queue.enqueue(20);
-        queue.enqueue(30);
-        queue.enqueue(40);
-        queue.enqueue(50);
+        int choice;
 
-        queue.display();
+        while (true) {
 
-        queue.dequeue();
-        queue.dequeue();
+            System.out.println("\n--- Printer Job Circular Queue ---");
+            System.out.println("1. Add Print Job");
+            System.out.println("2. Print Job");
+            System.out.println("3. Display Jobs");
+            System.out.println("4. Exit");
 
-        queue.enqueue(60);
-        queue.enqueue(70);
+            System.out.print("Enter your choice: ");
+            choice = input.nextInt();
 
-        queue.display();
+            if (choice == 1) {
+
+                System.out.print("Enter job number: ");
+                int job = input.nextInt();
+
+                queue.enqueue(job);
+
+            } else if (choice == 2) {
+
+                queue.dequeue();
+
+            } else if (choice == 3) {
+
+                queue.display();
+
+            } else if (choice == 4) {
+
+                System.out.println("Program ended.");
+                break;
+
+            } else {
+
+                System.out.println("Invalid choice.");
+            }
+        }
+
+        input.close();
     }
 }
-

@@ -1,6 +1,8 @@
+import java.util.Scanner;
+
 public class StackLinkedList {
 
-    // Node class
+    // Node
     class Node {
         int data;
         Node next;
@@ -19,7 +21,7 @@ public class StackLinkedList {
         newNode.next = top;
         top = newNode;
 
-        System.out.println(data + " pushed into stack.");
+        System.out.println("Roll number added.");
     }
 
     // Pop
@@ -27,7 +29,7 @@ public class StackLinkedList {
         if (top == null) {
             System.out.println("Stack is empty.");
         } else {
-            System.out.println(top.data + " popped from stack.");
+            System.out.println("Removed roll number: " + top.data);
             top = top.next;
         }
     }
@@ -36,31 +38,63 @@ public class StackLinkedList {
     void display() {
         if (top == null) {
             System.out.println("Stack is empty.");
-            return;
-        }
+        } else {
+            Node temp = top;
 
-        System.out.println("Stack:");
+            System.out.println("Roll numbers:");
 
-        Node temp = top;
-
-        while (temp != null) {
-            System.out.println(temp.data);
-            temp = temp.next;
+            while (temp != null) {
+                System.out.println(temp.data);
+                temp = temp.next;
+            }
         }
     }
 
     public static void main(String[] args) {
 
+        Scanner input = new Scanner(System.in);
+
         StackLinkedList stack = new StackLinkedList();
 
-        stack.push(10);
-        stack.push(20);
-        stack.push(30);
+        int choice;
 
-        stack.display();
+        while (true) {
 
-        stack.pop();
+            System.out.println("\n--- Student Roll Number Stack ---");
+            System.out.println("1. Push");
+            System.out.println("2. Pop");
+            System.out.println("3. Display");
+            System.out.println("4. Exit");
 
-        stack.display();
+            System.out.print("Enter your choice: ");
+            choice = input.nextInt();
+
+            if (choice == 1) {
+
+                System.out.print("Enter roll number: ");
+                int rollNumber = input.nextInt();
+
+                stack.push(rollNumber);
+
+            } else if (choice == 2) {
+
+                stack.pop();
+
+            } else if (choice == 3) {
+
+                stack.display();
+
+            } else if (choice == 4) {
+
+                System.out.println("Program ended.");
+                break;
+
+            } else {
+
+                System.out.println("Invalid choice.");
+            }
+        }
+
+        input.close();
     }
 }
